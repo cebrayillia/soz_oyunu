@@ -1,0 +1,9 @@
+dependencies:
+  flutter:
+    sdk: flutter
+  shared_preferences: ^2.2.2
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/words.json
