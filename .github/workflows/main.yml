@@ -1,0 +1,39 @@
+name: Android APK Yigici
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodu kopyala
+        uses: actions/checkout@v4
+
+      - name: Java 17 Qurasdir
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Flutter Qurasdir
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Catismayan Android sistem qovluqlarini avtomatik yarat
+        run: flutter create . --project-name soz_oyunu --platforms=android
+
+      - name: Paketleri yukle
+        run: flutter pub get
+
+      - name: APK Faylini Hazirla
+        run: flutter build apk --release
+
+      - name: Hazir APK-ni Yuklemeye Teqdim Et
+        uses: actions/upload-artifact@v4
+        with:
+          name: Soz-Oyunu-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
